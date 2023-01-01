@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Test</title>
+</head>
+<body>
+    <div>
+        <h2>회원 가입</h2>
+        <form th:method="post" th:action="@{/cookie-login/join}" th:object="${joinForm}">
+            <div>
+                <label th:for="loginId">로그인 아이디 : </label>
+                <input type="text" th:field="*{loginId}" th:errorclass="error-input"/>
+                <div class="error-class" th:errors="*{loginId}"></div>
+            </div>
+            <br/>
+            <div>
+                <label th:for="password">비밀번호 : </label>
+                <input type="password" th:field="*{password}" th:errorclass="error-input"/>
+                <div class="error-class" th:errors="*{password}"></div>
+            </div>
+            <br/>
+            <div>
+                <label th:for="nickname">닉네임 : </label>
+                <input type="text" th:field="*{nickname}" th:errorclass="error-input"/>
+                <div class="error-class" th:errors="*{nickname}"></div>
+            </div>
+            <br/>
+            <button type="submit">회원 가입</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<style>
+.error-class {
+    color: red;
+}
+.error-input {
+    border-color: red;
+}
+</style>
