@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Test</title>
+</head>
+<body>
+    <div>
+        <h1>쿠키 로그인</h1> <hr/>
+        <div th:if="${nickname == null}">
+            <h3>로그인 되어있지 않습니다!</h3>
+            <button onclick="location.href='/cookie-login/join'">회원 가입</button> <br/><br/>
+            <button onclick="location.href='/cookie-login/login'">로그인</button>
+        </div>
+        <div th:unless="${nickname == null}">
+            <h3>[[${nickname}]]님 환영합니다!</h3>
+            <button onclick="location.href='/cookie-login/info'">유저 정보</button> <br/><br/>
+            <button onclick="location.href='/cookie-login/admin'">관리자 페이지</button> <br/><br/>
+            <button onclick="location.href='/cookie-login/logout'">로그아웃</button>
+        </div>
+    </div>
+</body>
+</html>
