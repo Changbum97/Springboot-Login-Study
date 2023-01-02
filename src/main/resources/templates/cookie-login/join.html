@@ -3,10 +3,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Test</title>
+    <title>Cookie Login Test</title>
 </head>
 <body>
     <div>
+        <h1><a href="/cookie-login">쿠키 로그인</a></h1> <hr/>
         <h2>회원 가입</h2>
         <form th:method="post" th:action="@{/cookie-login/join}" th:object="${joinForm}">
             <div>

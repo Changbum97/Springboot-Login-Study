@@ -3,26 +3,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Test</title>
+    <title>Cookie Login Test</title>
 </head>
 <body>
     <div>
         <h1><a href="/cookie-login">쿠키 로그인</a></h1> <hr/>
-        <h2>유저 정보</h2>
-        <div>
-            <div th:text="|loginId : ${user.loginId}|"/>
-            <div th:text="|nickname : ${user.nickname}|"/>
-            <div th:text="|role : ${user.role}|"/>
-        </div>
+        <h2>관리자 페이지</h2>
+        <h3>인가에 성공하였습니다!</h3>
     </div>
 </body>
 </html>
-
-<style>
-.error-class {
-    color: red;
-}
-.error-input {
-    border-color: red;
-}
-</style>
