@@ -1,2 +1,5 @@
-package study.loginstudy.domain;public enum UserRole {
+package study.loginstudy.domain;
+
+public enum UserRole {
+    USER, ADMIN;
 }
