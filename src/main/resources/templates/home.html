@@ -3,11 +3,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="|${loginType} Test|"></title>
+    <title th:text="|${pageName}|"></title>
 </head>
 <body>
     <div>
-        <h1><a th:href="|/${loginType}|">[[${loginType}]] Page</a></h1> <hr/>
+        <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
         <div th:if="${nickname == null}">
             <h3>로그인 되어있지 않습니다!</h3>
             <button th:onclick="|location.href='@{/{loginType}/join (loginType=${loginType})}'|">회원 가입</button> <br/><br/>

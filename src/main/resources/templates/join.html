@@ -3,13 +3,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cookie Login Test</title>
+    <title th:text="|${pageName}|"></title>
 </head>
 <body>
-    <div>
-        <h1><a href="/cookie-login">쿠키 로그인</a></h1> <hr/>
+<div>
+    <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
         <h2>회원 가입</h2>
-        <form th:method="post" th:action="@{/cookie-login/join}" th:object="${joinForm}">
+        <form th:method="post" th:action="|@{/{loginType}/join (loginType=${loginType})}|" th:object="${joinRequest}">
             <div>
                 <label th:for="loginId">로그인 아이디 : </label>
                 <input type="text" th:field="*{loginId}" th:errorclass="error-input"/>
