@@ -23,6 +23,12 @@
             </div>
             <br/>
             <div>
+                <label th:for="passwordCheck">비밀번호 체크 : </label>
+                <input type="password" th:field="*{passwordCheck}" th:errorclass="error-input"/>
+                <div class="error-class" th:errors="*{passwordCheck}"></div>
+            </div>
+            <br/>
+            <div>
                 <label th:for="nickname">닉네임 : </label>
                 <input type="text" th:field="*{nickname}" th:errorclass="error-input"/>
                 <div class="error-class" th:errors="*{nickname}"></div>
