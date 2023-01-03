@@ -1,6 +1,5 @@
 package study.loginstudy.domain.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
-public class JoinForm {
+public class JoinRequest {
 
     @NotBlank(message = "로그인 아이디가 비어있습니다.")
     private String loginId;
