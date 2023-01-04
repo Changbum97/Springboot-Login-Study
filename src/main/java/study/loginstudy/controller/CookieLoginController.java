@@ -1,7 +1,6 @@
 package study.loginstudy.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cookie-login")
@@ -34,9 +32,6 @@ public class CookieLoginController {
 
         if(loginUser != null) {
             model.addAttribute("nickname", loginUser.getNickname());
-            log.info("[HOME] Login User Nickname : {}", loginUser.getNickname());
-        } else {
-            log.info("[HOME] Not Login User");
         }
 
         return "home";
@@ -70,12 +65,10 @@ public class CookieLoginController {
         }
 
         if(bindingResult.hasErrors()) {
-            log.info("[JOIN] 회원가입 실패");
             return "join";
         }
 
         userService.join(joinRequest);
-        log.info("[JOIN] 회원가입 성공");
         return "redirect:/cookie-login";
     }
 
@@ -102,7 +95,6 @@ public class CookieLoginController {
         }
 
         if(bindingResult.hasErrors()) {
-            log.info("[LOGIN] 로그인 실패");
             return "login";
         }
 
@@ -111,7 +103,6 @@ public class CookieLoginController {
         cookie.setMaxAge(60 * 60);  // 쿠키 유효 시간 : 1시간
         response.addCookie(cookie);
 
-        log.info("[LOGIN] 로그인 성공 : {}", user.getNickname());
         return "redirect:/cookie-login";
     }
 
@@ -123,7 +114,6 @@ public class CookieLoginController {
         Cookie cookie = new Cookie("userId", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        log.info("[LOGOUT] 로그아웃 성공");
         return "redirect:/cookie-login";
     }
 
