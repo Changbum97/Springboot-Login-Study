@@ -4,6 +4,7 @@
 
 1. Cookie를 사용한 로그인
 2. Session을 사용한 로그인
+3. Spring Security를 사용한 로그인 (Form Login)
 
 ## 구현 기능
 
@@ -35,3 +36,9 @@
 - 로그인 성공 시 HttpSession에 Session 생성 후 Key("userId"), Value(userId) 삽입
 - 인증, 인가가 필요한 페이지 접근 시 Session에서 userId를 꺼내 인증, 인가 진행
 - 세션 리스트 확인 기능 구현
+
+## Spring Security를 사용한 로그인 구현 (Form Login)
+
+- Spring Security의 BCryptPasswordEncoder을 사용한 비밀번호 암호화
+- SecurityConfig 설정을 통한 인증, 인가, 로그인, 로그아웃 진행
+- Spring Security의 로그인에 필요한 PrincipalDetails, PrincipalDetailsService 구현
