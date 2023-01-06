@@ -105,4 +105,20 @@ public class SecurityLoginController {
 
         return "admin";
     }
+
+    @GetMapping("/authentication-fail")
+    public String authenticationFail(Model model) {
+        model.addAttribute("loginType", "security-login");
+        model.addAttribute("pageName", "Security 로그인");
+
+        return "errorPage/authenticationFail";
+    }
+
+    @GetMapping("/authorization-fail")
+    public String authorizationFail(Model model) {
+        model.addAttribute("loginType", "security-login");
+        model.addAttribute("pageName", "Security 로그인");
+
+        return "errorPage/authorizationFail";
+    }
 }

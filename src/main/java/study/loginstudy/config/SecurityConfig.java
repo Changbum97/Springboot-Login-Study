@@ -1,11 +1,22 @@
 package study.loginstudy.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import study.loginstudy.auth.MyAccessDeniedHandler;
+import study.loginstudy.auth.MyAuthenticationEntryPoint;
 import study.loginstudy.domain.UserRole;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -34,5 +45,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/security-login/logout")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+        http
+                .exceptionHandling()
+                .authenticationEntryPoint(new MyAuthenticationEntryPoint())
+                .accessDeniedHandler(new MyAccessDeniedHandler());
+                /* 익명 클래스 사용 예제
+                .authenticationEntryPoint(new AuthenticationEntryPoint() {
+                    @Override
+                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+                        response.sendRedirect("/security-login/authentication-fail");
+                     }
+                })
+                .accessDeniedHandler(new AccessDeniedHandler() {
+                    @Override
+                    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                        response.sendRedirect("/security-login/authorization-fail");
+
+                    }
+                });*/
     }
 }
