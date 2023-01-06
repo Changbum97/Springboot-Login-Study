@@ -29,3 +29,9 @@
 
 - 로그인 성공 시 userId를 Cookie에 담아서 발급
 - 인증, 인가가 필요한 페이지 접근 시 Cookie에서 userId를 꺼내 인증, 인가 진행
+
+## Session을 사용한 로그인 구현
+
+- 로그인 성공 시 HttpSession에 Session 생성 후 Key("userId"), Value(userId) 삽입
+- 인증, 인가가 필요한 페이지 접근 시 Session에서 userId를 꺼내 인증, 인가 진행
+- 세션 리스트 확인 기능 구현
