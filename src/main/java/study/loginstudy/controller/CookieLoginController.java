@@ -28,7 +28,7 @@ public class CookieLoginController {
         model.addAttribute("loginType", "cookie-login");
         model.addAttribute("pageName", "쿠키 로그인");
 
-        User loginUser = userService.getLoginUser(userId);
+        User loginUser = userService.getLoginUserById(userId);
 
         if(loginUser != null) {
             model.addAttribute("nickname", loginUser.getNickname());
@@ -122,7 +122,7 @@ public class CookieLoginController {
         model.addAttribute("loginType", "cookie-login");
         model.addAttribute("pageName", "쿠키 로그인");
 
-        User loginUser = userService.getLoginUser(userId);
+        User loginUser = userService.getLoginUserById(userId);
 
         if(loginUser == null) {
             return "redirect:/cookie-login/login";
@@ -137,7 +137,7 @@ public class CookieLoginController {
         model.addAttribute("loginType", "cookie-login");
         model.addAttribute("pageName", "쿠키 로그인");
 
-        User loginUser = userService.getLoginUser(userId);
+        User loginUser = userService.getLoginUserById(userId);
 
         if(loginUser == null) {
             return "redirect:/cookie-login/login";
