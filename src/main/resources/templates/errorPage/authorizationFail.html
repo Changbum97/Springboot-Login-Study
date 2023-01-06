@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="|${pageName}|"></title>
+</head>
+<body>
+<div>
+  <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
+  <h2>(인증 실패)로그인하지 않았습니다!</h2>
+</body>
+</html>

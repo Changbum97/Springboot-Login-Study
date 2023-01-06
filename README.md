@@ -42,3 +42,6 @@
 - Spring Security의 BCryptPasswordEncoder을 사용한 비밀번호 암호화
 - SecurityConfig 설정을 통한 인증, 인가, 로그인, 로그아웃 진행
 - Spring Security의 로그인에 필요한 PrincipalDetails, PrincipalDetailsService 구현
+- authenticationEntryPoint을 사용한 인증 실패 페이지 출력 구현
+- accessDeniedHandler을 사용한 인가 실패 페이지 출력 구현
+
