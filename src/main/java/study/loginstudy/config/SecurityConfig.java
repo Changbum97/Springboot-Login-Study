@@ -18,9 +18,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Form Login에 사용하는 Security Config
+ */
+/* Security Config2(Jwt Token Login에서 사용)와 같이 사용하면 에러 발생
+Security Form Login 진행하기 위해서는 이 부분 주석 제거 후 Security Config2에 주석 추가
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+*/
+/* 다른 인증, 인가 방식 적용을 위한 어노테이션
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+*/
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
