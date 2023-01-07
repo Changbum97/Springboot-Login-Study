@@ -18,7 +18,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/jwt-login")
+@RequestMapping("/jwt-api-login")
 public class JwtLoginApiController {
 
     private final UserService userService;

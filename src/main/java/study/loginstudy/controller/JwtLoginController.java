@@ -1,35 +1,36 @@
 package study.loginstudy.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
-import study.loginstudy.domain.UserRole;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import study.loginstudy.auth.JwtTokenUtil;
 import study.loginstudy.domain.dto.JoinRequest;
 import study.loginstudy.domain.dto.LoginRequest;
 import study.loginstudy.domain.entity.User;
 import study.loginstudy.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/security-login")
-public class SecurityLoginController {
+@RequestMapping("/jwt-login")
+public class JwtLoginController {
 
     private final UserService userService;
 
     @GetMapping(value = {"", "/"})
     public String home(Model model, Authentication auth) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         if(auth != null) {
             User loginUser = userService.getLoginUserByLoginId(auth.getName());
@@ -43,8 +44,8 @@ public class SecurityLoginController {
 
     @GetMapping("/join")
     public String joinPage(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         model.addAttribute("joinRequest", new JoinRequest());
         return "join";
@@ -52,8 +53,8 @@ public class SecurityLoginController {
 
     @PostMapping("/join")
     public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         // loginId 중복 체크
         if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
@@ -73,23 +74,67 @@ public class SecurityLoginController {
         }
 
         userService.join2(joinRequest);
-        return "redirect:/security-login";
+        return "redirect:/jwt-login";
     }
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
 
+    @PostMapping("/login")
+    public String login(@ModelAttribute LoginRequest loginRequest, BindingResult bindingResult,
+                        HttpServletResponse response, Model model) {
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
+
+        User user = userService.login(loginRequest);
+
+        // 로그인 아이디나 비밀번호가 틀린 경우 global error return
+        if(user == null) {
+            bindingResult.reject("loginFail", "로그인 아이디 또는 비밀번호가 틀렸습니다.");
+        }
+
+        if(bindingResult.hasErrors()) {
+            return "login";
+        }
+
+        // 로그인 성공 => Jwt Token 발급
+        String secretKey = "my-secret-key-123123";
+        long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
+
+        String jwtToken = JwtTokenUtil.createToken(user.getLoginId(), secretKey, expireTimeMs);
+
+        // 발급한 Jwt Token을 Cookie를 통해 전송
+        // 클라이언트는 다음 요청부터 Jwt Token이 담긴 쿠키 전송 => 이 값을 통해 인증, 인가 진행
+        Cookie cookie = new Cookie("jwtToken", jwtToken);
+        cookie.setMaxAge(60 * 60);  // 쿠키 유효 시간 : 1시간
+        response.addCookie(cookie);
+
+        return "redirect:/jwt-login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response, Model model) {
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
+
+        // 쿠키 파기
+        Cookie cookie = new Cookie("jwtToken", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return "redirect:/jwt-login";
+    }
+
     @GetMapping("/info")
-    //@PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public String userInfo(Model model, Authentication auth) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         User loginUser = userService.getLoginUserByLoginId(auth.getName());
         model.addAttribute("user", loginUser);
@@ -98,26 +143,25 @@ public class SecurityLoginController {
     }
 
     @GetMapping("/admin")
-    //@PreAuthorize("hasAuthority('ADMIN')")
-    public String adminPage( Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+    public String adminPage(Model model) {
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         return "admin";
     }
 
     @GetMapping("/authentication-fail")
     public String authenticationFail(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         return "errorPage/authenticationFail";
     }
 
     @GetMapping("/authorization-fail")
     public String authorizationFail(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+        model.addAttribute("loginType", "jwt-login");
+        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         return "errorPage/authorizationFail";
     }

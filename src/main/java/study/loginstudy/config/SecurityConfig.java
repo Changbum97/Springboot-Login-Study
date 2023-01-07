@@ -57,19 +57,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new MyAuthenticationEntryPoint())
                 .accessDeniedHandler(new MyAccessDeniedHandler());
-                /* 익명 클래스 사용 예제
-                .authenticationEntryPoint(new AuthenticationEntryPoint() {
-                    @Override
-                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-                        response.sendRedirect("/security-login/authentication-fail");
-                     }
-                })
-                .accessDeniedHandler(new AccessDeniedHandler() {
-                    @Override
-                    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                        response.sendRedirect("/security-login/authorization-fail");
-
-                    }
-                });*/
     }
 }
