@@ -6,6 +6,7 @@
 2. Session을 사용한 로그인
 3. Spring Security를 사용한 로그인 (Form Login)
 4. Spring Security를 사용한 로그인 (Jwt Token Login)
+5. JWT + Cookie를 사용한 로그인
 
 ## 구현 기능
 
@@ -55,3 +56,10 @@
   - Jwt Token의 유효 시간이 지났는지 체크
 - Security Form Login에서 사용한 SecurityConfig와 Jwt Token Login에서 사용한 SecurityConfig2 충돌 발생
   - 둘 중 하나는 주석 처리를 통해 등록하지 않고 사용해야 함
+
+## JWT + Cookie를 사용한 로그인 구현
+
+- Front-End 없이 JWT 방식으로 화면 로그인을 구현하기 위해 Cookie 사용
+- 로그인 성공 시 Jwt Token 발급 => 쿠키에 넣어서 전송
+- 인증, 인가 시 쿠키에서 Jwt Token을 추출해 인증, 인가 진행
+- 로그아웃 시 쿠키 파기
