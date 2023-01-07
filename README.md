@@ -5,6 +5,7 @@
 1. Cookie를 사용한 로그인
 2. Session을 사용한 로그인
 3. Spring Security를 사용한 로그인 (Form Login)
+4. Spring Security를 사용한 로그인 (Jwt Token Login)
 
 ## 구현 기능
 
@@ -17,7 +18,7 @@
 2. 로그인 기능 구현
    - loginId, password를 입력 받아 로그인 진행
    - loginId가 존재하지 않거나 password가 틀렸으면 로그인 진행 X
-   - Thymeleaf, Validation을 사용한 Global Error 출력
+   - Thymeleaf, Validation을 사용한 Global Error 출력 또는 로그인 페이지로 redirect
 3. 로그아웃 기능 구현
 4. 유저 정보 출력 기능 구현
    - 인증(Authentication)된 유저만 접근 가능
@@ -45,3 +46,12 @@
 - authenticationEntryPoint을 사용한 인증 실패 페이지 출력 구현
 - accessDeniedHandler을 사용한 인가 실패 페이지 출력 구현
 
+## Spring Security를 사용한 로그인 구현 (Jwt Token Login)
+
+- JwtTokenFilter와 SecurityFilterChain을 사용해 Jwt Token Login 구현
+- JwtTokenUtil 기능
+  - 로그인 성고 시 Jwt Token 생성
+  - 인증, 인가 진행 시 Jwt Token에서 유저 정보 추출
+  - Jwt Token의 유효 시간이 지났는지 체크
+- Security Form Login에서 사용한 SecurityConfig와 Jwt Token Login에서 사용한 SecurityConfig2 충돌 발생
+  - 둘 중 하나는 주석 처리를 통해 등록하지 않고 사용해야 함
