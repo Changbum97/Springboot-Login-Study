@@ -25,8 +25,6 @@ public class CookieLoginController {
 
     @GetMapping(value = {"", "/"})
     public String home(@CookieValue(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
 
         User loginUser = userService.getLoginUserById(userId);
 
@@ -39,17 +37,12 @@ public class CookieLoginController {
 
     @GetMapping("/join")
     public String joinPage(Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
-
         model.addAttribute("joinRequest", new JoinRequest());
         return "join";
     }
 
     @PostMapping("/join")
-    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
+    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult) {
 
         // loginId 중복 체크
         if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
@@ -74,19 +67,13 @@ public class CookieLoginController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
-
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequest loginRequest, BindingResult bindingResult,
-                        HttpServletResponse response, Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
-
+                        HttpServletResponse response) {
         User user = userService.login(loginRequest);
 
         // 로그인 아이디나 비밀번호가 틀린 경우 global error return
@@ -107,10 +94,7 @@ public class CookieLoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletResponse response, Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
-
+    public String logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("userId", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
@@ -119,9 +103,6 @@ public class CookieLoginController {
 
     @GetMapping("/info")
     public String userInfo(@CookieValue(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
-
         User loginUser = userService.getLoginUserById(userId);
 
         if(loginUser == null) {
@@ -133,10 +114,7 @@ public class CookieLoginController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(@CookieValue(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "cookie-login");
-        model.addAttribute("pageName", "쿠키 로그인");
-
+    public String adminPage(@CookieValue(name = "userId", required = false) Long userId) {
         User loginUser = userService.getLoginUserById(userId);
 
         if(loginUser == null) {

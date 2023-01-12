@@ -29,8 +29,6 @@ public class JwtLoginController {
 
     @GetMapping(value = {"", "/"})
     public String home(Model model, Authentication auth) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
 
         if(auth != null) {
             User loginUser = userService.getLoginUserByLoginId(auth.getName());
@@ -44,18 +42,12 @@ public class JwtLoginController {
 
     @GetMapping("/join")
     public String joinPage(Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
         model.addAttribute("joinRequest", new JoinRequest());
         return "join";
     }
 
     @PostMapping("/join")
-    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
+    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult) {
         // loginId 중복 체크
         if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
             bindingResult.addError(new FieldError("joinRequest", "loginId", "로그인 아이디가 중복됩니다."));
@@ -79,19 +71,13 @@ public class JwtLoginController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequest loginRequest, BindingResult bindingResult,
-                        HttpServletResponse response, Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
+                        HttpServletResponse response) {
         User user = userService.login(loginRequest);
 
         // 로그인 아이디나 비밀번호가 틀린 경우 global error return
@@ -119,10 +105,7 @@ public class JwtLoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletResponse response, Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
+    public String logout(HttpServletResponse response) {
         // 쿠키 파기
         Cookie cookie = new Cookie("jwtToken", null);
         cookie.setMaxAge(0);
@@ -133,9 +116,6 @@ public class JwtLoginController {
 
     @GetMapping("/info")
     public String userInfo(Model model, Authentication auth) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
         User loginUser = userService.getLoginUserByLoginId(auth.getName());
         model.addAttribute("user", loginUser);
 
@@ -143,26 +123,17 @@ public class JwtLoginController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
+    public String adminPage() {
         return "admin";
     }
 
     @GetMapping("/authentication-fail")
-    public String authenticationFail(Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
+    public String authenticationFail() {
         return "errorPage/authenticationFail";
     }
 
     @GetMapping("/authorization-fail")
-    public String authorizationFail(Model model) {
-        model.addAttribute("loginType", "jwt-login");
-        model.addAttribute("pageName", "Jwt Token 화면 로그인");
-
+    public String authorizationFail() {
         return "errorPage/authorizationFail";
     }
 }

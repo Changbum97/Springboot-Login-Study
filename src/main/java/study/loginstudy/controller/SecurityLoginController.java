@@ -28,8 +28,6 @@ public class SecurityLoginController {
 
     @GetMapping(value = {"", "/"})
     public String home(Model model, Authentication auth) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
 
         if(auth != null) {
             User loginUser = userService.getLoginUserByLoginId(auth.getName());
@@ -43,17 +41,13 @@ public class SecurityLoginController {
 
     @GetMapping("/join")
     public String joinPage(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
 
         model.addAttribute("joinRequest", new JoinRequest());
         return "join";
     }
 
     @PostMapping("/join")
-    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
+    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult) {
 
         // loginId 중복 체크
         if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
@@ -78,9 +72,6 @@ public class SecurityLoginController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
-
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
@@ -88,8 +79,6 @@ public class SecurityLoginController {
     @GetMapping("/info")
     //@PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public String userInfo(Model model, Authentication auth) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
 
         User loginUser = userService.getLoginUserByLoginId(auth.getName());
         model.addAttribute("user", loginUser);
@@ -99,26 +88,17 @@ public class SecurityLoginController {
 
     @GetMapping("/admin")
     //@PreAuthorize("hasAuthority('ADMIN')")
-    public String adminPage( Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
-
+    public String adminPage() {
         return "admin";
     }
 
     @GetMapping("/authentication-fail")
-    public String authenticationFail(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
-
+    public String authenticationFail() {
         return "errorPage/authenticationFail";
     }
 
     @GetMapping("/authorization-fail")
-    public String authorizationFail(Model model) {
-        model.addAttribute("loginType", "security-login");
-        model.addAttribute("pageName", "Security 로그인");
-
+    public String authorizationFail() {
         return "errorPage/authorizationFail";
     }
 }

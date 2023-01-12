@@ -29,8 +29,6 @@ public class SessionLoginController {
 
     @GetMapping(value = {"", "/"})
     public String home(Model model, @SessionAttribute(name = "userId", required = false) Long userId) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
 
         User loginUser = userService.getLoginUserById(userId);
 
@@ -43,17 +41,12 @@ public class SessionLoginController {
 
     @GetMapping("/join")
     public String joinPage(Model model) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
-
         model.addAttribute("joinRequest", new JoinRequest());
         return "join";
     }
 
     @PostMapping("/join")
-    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
+    public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult) {
 
         // loginId 중복 체크
         if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
@@ -78,19 +71,13 @@ public class SessionLoginController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
-
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequest loginRequest, BindingResult bindingResult,
-                        HttpServletRequest httpServletRequest, Model model) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
-
+                        HttpServletRequest httpServletRequest) {
         User user = userService.login(loginRequest);
 
         // 로그인 아이디나 비밀번호가 틀린 경우 global error return
@@ -117,10 +104,7 @@ public class SessionLoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, Model model) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
-
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);  // Session이 없으면 null return
         if(session != null) {
             sessionList.remove(session.getId());
@@ -131,8 +115,6 @@ public class SessionLoginController {
 
     @GetMapping("/info")
     public String userInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
 
         User loginUser = userService.getLoginUserById(userId);
 
@@ -145,10 +127,7 @@ public class SessionLoginController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "세션 로그인");
-
+    public String adminPage(@SessionAttribute(name = "userId", required = false) Long userId) {
         User loginUser = userService.getLoginUserById(userId);
 
         if(loginUser == null) {
