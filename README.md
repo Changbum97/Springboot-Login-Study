@@ -5,8 +5,8 @@
 1. Cookie를 사용한 로그인
 2. Session을 사용한 로그인
 3. Spring Security를 사용한 로그인 (Form Login)
-4. Spring Security를 사용한 로그인 (Jwt Token Login)
-5. JWT + Cookie를 사용한 로그인
+4. Spring Security를 사용한 로그인 (Jwt Token API Login)
+5. JWT + Cookie를 사용한 로그인 (Jwt Token Page Login)
 
 ## 구현 기능
 
@@ -27,6 +27,10 @@
 5. 관리자 페이지 구현
    - 인가(Authorization) 기능 구현
    - role이 "ADMIN"인 유저만 관리자 페이지 접근 가능
+6. 공통 화면 사용
+   - 모든 페이지는 공통으로 사용
+   - 화면에 로그인 방식 출력과 각각의 로그인에 맞는 URL 매핑을 위해 HTML 페이지에 loginType, pageName 전송
+   - @ControllerAdvice를 활용하여 API 로그인이 아닌 경우에 URL을 통해 어떤 로그인 예제인지 체크 후 해당하는 loginType, pageName을 model에 담아 전송
 
 ## Cookie를 사용한 로그인 구현
 
