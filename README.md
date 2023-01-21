@@ -7,6 +7,7 @@
 3. Spring Security를 사용한 로그인 (Form Login)
 4. Spring Security를 사용한 로그인 (Jwt Token API Login)
 5. JWT + Cookie를 사용한 로그인 (Jwt Token Page Login)
+6. OAuth 2.0 로그인 (구글)
 
 ## 구현 기능
 
@@ -67,3 +68,9 @@
 - 로그인 성공 시 Jwt Token 발급 => 쿠키에 넣어서 전송
 - 인증, 인가 시 쿠키에서 Jwt Token을 추출해 인증, 인가 진행
 - 로그아웃 시 쿠키 파기
+
+## OAuth 2.0 로그인
+
+- 구글 로그인 구현
+- Security Form 로그인 예제에 코드를 추가, 수정하며 구현
+- Google Api Client-Id, Client-Secret은 보안을 위해 환경변수로 등록 
