@@ -41,6 +41,9 @@ dependencies {
 
     // Jwt Token
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    // OAuth 2.0 Login
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
