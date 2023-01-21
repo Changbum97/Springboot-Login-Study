@@ -10,3 +10,13 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+
+  # OAuth 로그인
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: Environment Variables에 작성
+            client-secret: Environment Variables에 작성
+            scope: Environment Variables에 작성
