@@ -17,6 +17,9 @@ spring:
       client:
         registration:
           google:
-            client-id: Environment Variables에 작성
-            client-secret: Environment Variables에 작성
-            scope: Environment Variables에 작성
+            client-id: Environment Variables에 등록
+            client-secret: Environment Variables에 등록
+            scope:
+              - email
+              - profile
+
