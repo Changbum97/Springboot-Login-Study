@@ -1,4 +1,4 @@
-package study.loginstudy.controller;
+package study.loginstudy.controllerAdvice;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

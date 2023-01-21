@@ -28,6 +28,9 @@
             <button type="button" th:onclick="|location.href='@{/{loginType}/join (loginType=${loginType})}'|">회원 가입</button> <br/><br/>
         </form>
     </div>
+    <div th:if="${loginType == 'security-login'}">
+        <a href="/oauth2/authorization/google">구글 로그인</a>
+    </div>
 </body>
 </html>
 

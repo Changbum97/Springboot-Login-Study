@@ -24,8 +24,8 @@ import java.io.IOException;
 /**
  * Token Login에 사용하는 Security Config
  */
-@Configuration
-@EnableWebSecurity
+/*@Configuration
+@EnableWebSecurity*/
 @RequiredArgsConstructor
 public class SecurityConfig2 {
 

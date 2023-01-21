@@ -26,4 +26,8 @@ public class User {
     private String nickname;
 
     private UserRole role;
+
+    // OAuth 로그인에 사용
+    private String provider;
+    private String providerId;
 }
