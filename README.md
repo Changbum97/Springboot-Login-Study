@@ -71,6 +71,8 @@
 
 ## OAuth 2.0 로그인
 
-- 구글 로그인 구현
+- 구글, 카카오, 네이버, 페이스북 로그인 구현
 - Security Form 로그인 예제에 코드를 추가, 수정하며 구현
 - Google Api Client-Id, Client-Secret은 보안을 위해 환경변수로 등록 
+- PrincipalOauth2UserService를 통해 OAuth 로그인 및 회원가입 진행
+- OAuth2UserInfo를 상속받은 GoogleUserInfo, KakaoUserInfo, NaverUserInfo, FacebookUserInfo 사용
