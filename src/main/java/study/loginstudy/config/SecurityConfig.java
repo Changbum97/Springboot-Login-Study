@@ -2,23 +2,13 @@ package study.loginstudy.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import study.loginstudy.auth.MyAccessDeniedHandler;
 import study.loginstudy.auth.MyAuthenticationEntryPoint;
-import study.loginstudy.auth.PrincipalOauth2UserService;
+import study.loginstudy.auth.oauth.PrincipalOauth2UserService;
 import study.loginstudy.domain.UserRole;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Form Login에 사용하는 Security Config
